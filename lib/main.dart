@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
+import 'package:yalla_nebi3/welcome/splash_screen.dart';
 
 void main() {
   runApp(const YallaNebi3());
@@ -17,7 +17,7 @@ class YallaNebi3 extends StatelessWidget {
       
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const   LoginView(),
+      home: const   SplashScreen(),
     );
   }
 }
