@@ -10,6 +10,6 @@ class AppColors{
   static const successColor = Color(0xFF00C853);
   static const warningColor = Color(0xFFFFA000);
   static const backgroundcolor = Color(0xFFe5e4e1);
- static const welcomebackgroundcolor =  Color(0xFFf7f0e2);
+  static const welcomebackgroundcolor =  Color(0xFFf7f0e2);
  }
 

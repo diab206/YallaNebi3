@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/core/const/app_colors.dart';
 
 class CustomTextButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  static const Color primaryColor = Color(0xFF3669C9);
 
   const CustomTextButton({
     Key? key,
@@ -22,7 +22,7 @@ class CustomTextButton extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            color: primaryColor,
+            color:AppColors. primaryColor,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
