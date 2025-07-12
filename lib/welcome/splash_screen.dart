@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
+import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = 'splash';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) =>  LoginView()),
+        MaterialPageRoute(builder: (context) =>  WelcomeScreen()),
         (Route<dynamic> route) => false, // Remove all routes
       );
     });
@@ -28,11 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color(0xFF121312), // Set the background color of the entire screen
-      body: Center(
+backgroundColor: AppColors.backgroundcolor ,
+
+  body: Center(
         child: SizedBox(
-          width: 150, // Set the width of the logo
-          height: 150, // Set the height of the logo
+          width: 300, // Set the width of the logo
+          height: 300, // Set the height of the logo
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
