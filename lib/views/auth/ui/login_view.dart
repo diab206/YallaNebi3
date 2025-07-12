@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/core/widgets/text_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_form_field.dart'; // Use your reusable field
 
 class LoginView extends StatefulWidget {
@@ -97,6 +98,19 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   child: const Text('Login'),
+                ),
+
+                const SizedBox(height: 16),
+
+                /// Forgot Password
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomTextButton(
+                      onTap: (){},
+                      text: 'Forgot Password?',
+                    ),
+                  ],
                 ),
               ],
             ),
