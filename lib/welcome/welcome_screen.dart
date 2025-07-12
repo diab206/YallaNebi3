@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:yalla_nebi3/core/app_colors.dart';
+import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String routeName = 'welcome';
   const WelcomeScreen({super.key});
-
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
