@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
+import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 import 'package:yalla_nebi3/welcome/splash_screen.dart';
+import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
 void main() {
   runApp(const YallaNebi3());
@@ -18,6 +21,15 @@ class YallaNebi3 extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const   SplashScreen(),
+      debugShowCheckedModeBanner: false,
+      initialRoute: LoginView.routeName,
+      routes: {
+         SplashScreen.routeName: (context) => const SplashScreen(),
+         WelcomeScreen.routeName: (context) => const WelcomeScreen(),
+         LoginView.routeName: (context) =>  LoginView(),     
+         SignUpView.routeName: (context) => const SignUpView(),
+        // Add other routes here as needed
+      },
     );
   }
 }
