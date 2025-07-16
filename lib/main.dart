@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
+import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
 import 'package:yalla_nebi3/welcome/splash_screen.dart';
 import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
@@ -22,12 +23,13 @@ class YallaNebi3 extends StatelessWidget {
       ),
       home: const   SplashScreen(),
       debugShowCheckedModeBanner: false,
-      initialRoute: SignUpView.routeName,
+      initialRoute:MainHomeView .routeName,
       routes: {
          SplashScreen.routeName: (context) => const SplashScreen(),
          WelcomeScreen.routeName: (context) => const WelcomeScreen(),
          LoginView.routeName: (context) =>  LoginView(),     
          SignUpView.routeName: (context) => const SignUpView(),
+          MainHomeView.routeName: (context) => MainHomeView(),
         // Add other routes here as needed
       },
     );

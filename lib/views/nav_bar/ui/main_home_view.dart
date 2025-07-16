@@ -9,6 +9,7 @@ import 'package:yalla_nebi3/views/profile/ui/profile_views.dart';
 import 'package:yalla_nebi3/views/store/ui/store_views.dart';
 
 class MainHomeView extends StatelessWidget {
+  static const String routeName = 'main_home';
   MainHomeView({super.key});
   final List<Widget> views = [
     HomeViews(),
