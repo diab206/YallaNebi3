@@ -22,7 +22,7 @@ class YallaNebi3 extends StatelessWidget {
       ),
       home: const   SplashScreen(),
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginView.routeName,
+      initialRoute: SignUpView.routeName,
       routes: {
          SplashScreen.routeName: (context) => const SplashScreen(),
          WelcomeScreen.routeName: (context) => const WelcomeScreen(),

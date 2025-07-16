@@ -5,6 +5,7 @@ import 'package:yalla_nebi3/core/widgets/elvated_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
 import 'package:yalla_nebi3/views/auth/ui/forgot_view.dart';
+import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = 'login';
@@ -68,6 +69,7 @@ class _LoginViewState extends State<LoginView> {
           
                       /// Password Field with Eye Icon
                       CustomTextFormField(
+                        keyboardType: TextInputType.visiblePassword,
                         controller: passwordController,
                         hintText: 'Enter your password',
                         obscureText: _obscurePassword,
@@ -161,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
                         CustomTextButton(
                           text: 'Sign Up',
                           onTap: () {
-                            Navigator.pushNamed(context, '/signup');
+                            navigteTo(context, SignUpView());
                           },
                         ),
                       ],
