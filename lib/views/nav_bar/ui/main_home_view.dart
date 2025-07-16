@@ -1,17 +1,26 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/views/favourit/ui/favourit_view.dart';
+import 'package:yalla_nebi3/views/home/ui/home_views.dart';
+import 'package:yalla_nebi3/views/profile/ui/profile_views.dart';
+import 'package:yalla_nebi3/views/store/ui/store_views.dart';
 
 class MainHomeView extends StatelessWidget {
-  const MainHomeView({super.key});
+   MainHomeView({super.key});
+   final List<Widget> views = [
+    HomeViews(),
+    StoreView(),
+    FavouritView(),
+    PerfoileView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Padding(padding: 
-      const EdgeInsets.all(8.0),
-       // ignore: avoid_unnecessary_containers
-       child: Container(child: Text('Main Home View')))),
+      body: SafeArea(child: views[2],
+      ),
        bottomNavigationBar:Container(
         decoration: BoxDecoration(
           color: AppColors.backgroundcolor,
