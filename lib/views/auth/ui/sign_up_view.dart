@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/core/widgets/elvated_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
+import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 
 class SignUpView extends StatefulWidget {
   static const String routeName = 'signup';
@@ -153,7 +155,7 @@ class SignUpViewState extends State<SignUpView> {
                         CustomTextButton(
                           text: 'Login',
                           onTap: () {
-                          Navigator.pop(context);
+                           navigteTo(context, LoginView());
                           },
                         ),
                       ],
