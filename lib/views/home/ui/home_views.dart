@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/core/components/cashed_network_image.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/widgets/custom_action_button.dart';
-import 'package:yalla_nebi3/core/widgets/custom_search_bar.dart';
+import 'package:yalla_nebi3/core/components/custom_search_bar.dart';
 import 'package:yalla_nebi3/views/home/widgets/catagries_list.dart';
 
 class HomeViews extends StatelessWidget {
@@ -45,9 +46,10 @@ class HomeViews extends StatelessWidget {
                         bottomLeft: Radius.circular(16.0),
                         bottomRight: Radius.circular(16.0),
                       ),
-                      child: Image.network(
-                        'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg',
+                      child: CahedNetworkImage(
+                        url:'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg'
                       ),
+
                     ),
                     Positioned(
                       child: Container(
@@ -103,30 +105,27 @@ class HomeViews extends StatelessWidget {
                         children: [
                           Column(
                             children: [
-                          Text(
-                            '100 LE',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                              Text(
+                                '100 LE',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '120 LE',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.greyColor,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '120 LE',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.greyColor,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),  
-                      ] 
-                       ),
-                          
-                        CustomActionButton(onPressed: (){},
-                        text: 'Buy Now',
-                        ),
-                      ],
+
+                          CustomActionButton(onPressed: () {}, text: 'Buy Now'),
+                        ],
                       ),
-                      
                     ],
                   ),
                 ),
@@ -136,5 +135,17 @@ class HomeViews extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+
+class CustomCircleProgressIndicictor extends StatelessWidget {
+  const CustomCircleProgressIndicictor({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: CircularProgressIndicator());
   }
 }
