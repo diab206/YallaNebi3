@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/widgets/custom_search_bar.dart';
 import 'package:yalla_nebi3/views/home/widgets/catagries_list.dart';
 
@@ -47,6 +48,34 @@ class HomeViews extends StatelessWidget {
                         'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg',
                       ),
                     ),
+                    Positioned(
+                      child: Container(
+                     //   color: AppColors.primaryColor,
+                        decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0),
+                          ),
+                        ),
+                        width: 100,
+                        height: 50,
+                      alignment: Alignment.center,
+                     child: 
+                        Text(
+                          '10 % OFF ',
+                          style: TextStyle(
+                            color:AppColors.backgroundcolor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      
+                  ),
+                
+                    
+                      
+                    )
                   ],
                 ),
               ],
