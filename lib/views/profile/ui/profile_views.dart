@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/components/custom_profile_button.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/views/profile/ui/edit_name.dart';
+import 'package:yalla_nebi3/views/profile/ui/my_orders_view.dart';
 
 class PerfoileView extends StatelessWidget {
   const PerfoileView({super.key});
@@ -52,7 +53,7 @@ class PerfoileView extends StatelessWidget {
                         icon: Icons.shopping_bag,
                         label: "My Orders",
                         onPressed: () {
-                          // Navigate to orders screen
+                         navigteTo(context, MyOrdersView());
                         },
                       ),
                       const SizedBox(height: 12),
