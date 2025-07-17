@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/core/widgets/custom_action_button.dart';
 import 'package:yalla_nebi3/core/widgets/custom_search_bar.dart';
 import 'package:yalla_nebi3/views/home/widgets/catagries_list.dart';
 
@@ -50,9 +51,9 @@ class HomeViews extends StatelessWidget {
                     ),
                     Positioned(
                       child: Container(
-                     //   color: AppColors.primaryColor,
+                        //   color: AppColors.primaryColor,
                         decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(16.0),
                             bottomRight: Radius.circular(16.0),
@@ -60,23 +61,74 @@ class HomeViews extends StatelessWidget {
                         ),
                         width: 100,
                         height: 50,
-                      alignment: Alignment.center,
-                     child: 
-                        Text(
+                        alignment: Alignment.center,
+                        child: Text(
                           '10 % OFF ',
                           style: TextStyle(
-                            color:AppColors.backgroundcolor,
+                            color: AppColors.backgroundcolor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      
-                  ),
-                
-                    
-                      
-                    )
+                      ),
+                    ),
                   ],
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Product Name',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: AppColors.greyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                          Text(
+                            '100 LE',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '120 LE',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.greyColor,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),  
+                      ] 
+                       ),
+                          
+                        CustomActionButton(onPressed: (){},
+                        text: 'Buy Now',
+                        ),
+                      ],
+                      ),
+                      
+                    ],
+                  ),
                 ),
               ],
             ),
