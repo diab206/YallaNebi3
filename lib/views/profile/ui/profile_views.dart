@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/components/custom_profile_button.dart';
+import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
+import 'package:yalla_nebi3/views/profile/ui/edit_name.dart';
 
 class PerfoileView extends StatelessWidget {
   const PerfoileView({super.key});
@@ -42,7 +44,7 @@ class PerfoileView extends StatelessWidget {
                         icon: Icons.person,
                         label: "Edit Name",
                         onPressed: () {
-                          // Navigate to edit name screen
+                        navigteTo(context,EditName());
                         },
                       ),
                       const SizedBox(height: 12),
