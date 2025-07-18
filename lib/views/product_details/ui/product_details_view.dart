@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:yalla_nebi3/core/components/cashed_network_image.dart';
+import 'package:yalla_nebi3/core/components/user_comments.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/functions/custom_app_bar.dart';
+import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
 
 class ProductDetailsView extends StatelessWidget {
   const ProductDetailsView({super.key});
@@ -57,6 +59,26 @@ class ProductDetailsView extends StatelessWidget {
                     }
                   },
                 ),
+                SizedBox(height: 40),
+                CustomTextFormField(
+                  hintText: 'type your Feedback',
+
+                  suffixIcon: Icon(Icons.send),
+                ),
+                SizedBox(height: 20),
+                Column(
+                  children: [
+                  Row(
+                    children: [
+                      Text('Comments',style: TextStyle(
+                        fontSize: 20
+                       
+                      )),
+                    ],
+                  ),
+                  UserComments()
+                  
+                  ]),
               ],
             ),
           ),
