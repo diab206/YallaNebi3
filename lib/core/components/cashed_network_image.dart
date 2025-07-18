@@ -17,6 +17,8 @@ class CahedNetworkImage extends StatelessWidget {
       placeholder:
           (context, url) => SizedBox(
             height: 200,
+          
+            width: double.infinity,
             child: CustomCircleProgressIndicictor(),
           ),
       errorWidget: (context, url, error) => Icon(Icons.error),
