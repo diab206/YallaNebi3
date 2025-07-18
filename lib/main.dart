@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
 import 'package:yalla_nebi3/welcome/splash_screen.dart';
 import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
-void main() {
+void main() async {
+  await dotenv.load();
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+  );
+
   runApp(const YallaNebi3());
 }
 
@@ -18,18 +26,17 @@ class YallaNebi3 extends StatelessWidget {
     return MaterialApp(
       title: 'YallaNebi3',
       theme: ThemeData(
-      
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const   SplashScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
-      initialRoute:MainHomeView .routeName,
+      initialRoute: MainHomeView.routeName,
       routes: {
-         SplashScreen.routeName: (context) => const SplashScreen(),
-         WelcomeScreen.routeName: (context) => const WelcomeScreen(),
-         LoginView.routeName: (context) =>  LoginView(),     
-         SignUpView.routeName: (context) => const SignUpView(),
-          MainHomeView.routeName: (context) => MainHomeView(),
+        SplashScreen.routeName: (context) => const SplashScreen(),
+        WelcomeScreen.routeName: (context) => const WelcomeScreen(),
+        LoginView.routeName: (context) => LoginView(),
+        SignUpView.routeName: (context) => const SignUpView(),
+        MainHomeView.routeName: (context) => MainHomeView(),
         // Add other routes here as needed
       },
     );
