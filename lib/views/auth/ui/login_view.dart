@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yalla_nebi3/core/components/custom_circle_indicitor.dart';
-import 'package:yalla_nebi3/core/functions/nackbar_helper.dart';
+import 'package:yalla_nebi3/core/functions/snackbar_helper.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/core/widgets/elvated_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_button.dart';
