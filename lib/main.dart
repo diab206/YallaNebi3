@@ -53,9 +53,13 @@ class YallaNebi3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     SupabaseClient client = Supabase.instance.client;
     return BlocProvider(
+       
+
       create: (context) => AuthenticationCubit(),
       child: MaterialApp(
+        
         title: 'YallaNebi3',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -63,7 +67,7 @@ class YallaNebi3 extends StatelessWidget {
         ),
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
-        initialRoute: SplashScreen.routeName,
+        initialRoute:client.auth.currentSession != null ? MainHomeView.routeName : SplashScreen.routeName,
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),
