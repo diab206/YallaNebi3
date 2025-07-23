@@ -41,29 +41,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }) async {
     emit(SignUpLoading());
     try {
-      log('Attempting to register user: $email');
-      
-      final AuthResponse response = await client.auth.signUp(
-        password: password, 
-        email: email,
-        data: {'name': name}, // Store the name in user metadata
-      );
-      
-      if (response.user != null) {
-        log('Registration successful for user: ${response.user!.email}');
-        // Check if email confirmation is required
-        if (response.session != null) {
-          // User is immediately signed in (email confirmation disabled)
-          emit(SignUpSuccess());
-        } else {
-          // Email confirmation required
-          emit(SignUpSuccess()); // You might want to create a different state for this
-        }
-      } else {
-        log('Registration failed: No user returned');
-        emit(SignUpFailure(errorMessage: 'Registration failed'));
-      }
-    } on AuthException catch (e) {
+      await client.auth.signUp( email: email,password: password);
+      addUserData(email: email, name: name);
+       emit(SignUpSuccess());
+    }
+    on AuthException catch (e) {
       log('Auth Exception during registration: ${e.toString()}');
       emit(SignUpFailure(errorMessage: e.message));
     } catch (e) {
@@ -71,6 +53,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(SignUpFailure(errorMessage: e.toString()));
     }
   }
+      
+      
+    
 
   // Helper method to get current user
   User? getCurrentUser() {
@@ -96,5 +81,20 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       log(e.toString());
       emit(ResetpasswordFailure());
     } 
+  }
+  Future<void> addUserData({required String name, required String email })async{
+    emit(UserDataAddedLoading());
+    try {
+      await client.from('users').insert({
+        'id': client.auth.currentUser?.id,
+        'name': name,
+        'email': email,
+      });
+      emit(UserDataAddedSuccess());
+    }catch(e){
+      log(e.toString());
+      emit(UserDataAddedFailure());
+    }
+
   }
 }
