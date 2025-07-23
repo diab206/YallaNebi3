@@ -24,4 +24,9 @@ final class LogoutSuccess extends AuthenticationState {}
 final class LogoutLoading extends AuthenticationState {}
 final class LogoutFailure extends AuthenticationState {
 }
+final class ResetpasswordSuccess extends AuthenticationState {}
+final class ResetpasswordLoading extends AuthenticationState {}
+final class ResetpasswordFailure extends AuthenticationState {
+}
+
 
