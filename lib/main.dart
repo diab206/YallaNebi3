@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
-import 'package:yalla_nebi3/views/product_details/logic/cubit/authentication_cubit.dart';
+import 'package:yalla_nebi3/logic/logic/cubit/authentication_cubit.dart';
 import 'package:yalla_nebi3/welcome/splash_screen.dart';
 import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 

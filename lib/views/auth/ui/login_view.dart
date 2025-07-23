@@ -9,7 +9,7 @@ import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
 import 'package:yalla_nebi3/views/auth/ui/forgot_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
-import 'package:yalla_nebi3/views/product_details/logic/cubit/authentication_cubit.dart';
+import 'package:yalla_nebi3/logic/logic/cubit/authentication_cubit.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = 'login';
