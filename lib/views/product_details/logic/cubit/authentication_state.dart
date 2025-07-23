@@ -20,3 +20,8 @@ final class SignUpFailure extends AuthenticationState {
 
   SignUpFailure({required this.errorMessage});
 }
+final class LogoutSuccess extends AuthenticationState {}
+final class LogoutLoading extends AuthenticationState {}
+final class LogoutFailure extends AuthenticationState {
+}
+

@@ -81,9 +81,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> signOut() async {
     try {
       await client.auth.signOut();
-      emit(AuthenticationInitial());
+      emit(LogoutSuccess());
     } catch (e) {
-      log('Sign out error: ${e.toString()}');
+      log(e.toString());
+      emit(LogoutFailure());
     }
   }
 }
