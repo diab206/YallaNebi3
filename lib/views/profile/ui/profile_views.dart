@@ -4,6 +4,7 @@ import 'package:yalla_nebi3/core/components/custom_circle_indicitor.dart';
 import 'package:yalla_nebi3/core/components/custom_profile_button.dart';
 import 'package:yalla_nebi3/core/functions/nackbar_helper.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
+import 'package:yalla_nebi3/core/models/user_data_model.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/product_details/logic/cubit/authentication_cubit.dart';
 import 'package:yalla_nebi3/views/profile/ui/edit_name.dart';
@@ -28,6 +29,7 @@ class PerfoileView extends StatelessWidget {
       },
       builder: (context, state) {
          AuthenticationCubit cubit = context.read<AuthenticationCubit>();
+          UserDataModel? user = context.read<AuthenticationCubit>().userDataModel;
         return state is LogoutLoading
             ? CustomCircleProgressIndicictor()
             : Center(
@@ -53,16 +55,16 @@ class PerfoileView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          "Karim Ahmed",
+                         Text(
+                         user?.name ?? "Guest User",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 5),
-                        const Text(
-                          "FlutterDeveloper.karim@gmail.com",
+                         Text(
+                          user?.email ?? "Guester Email",
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                           textAlign: TextAlign.center,
                         ),
