@@ -5,7 +5,7 @@ import 'package:yalla_nebi3/core/functions/custom_app_bar.dart';
 import 'package:yalla_nebi3/core/functions/nackbar_helper.dart';
 import 'package:yalla_nebi3/core/widgets/custom_action_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
-import 'package:yalla_nebi3/logic/logic/cubit/authentication_cubit.dart';
+import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
 
 class ForgotView extends StatefulWidget {
   static const String routeName = 'forgot_view';

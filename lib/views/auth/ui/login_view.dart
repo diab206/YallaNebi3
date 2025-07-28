@@ -6,10 +6,10 @@ import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/core/widgets/elvated_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_button.dart';
 import 'package:yalla_nebi3/core/widgets/text_form_field.dart';
+import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
 import 'package:yalla_nebi3/views/auth/ui/forgot_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
-import 'package:yalla_nebi3/logic/logic/cubit/authentication_cubit.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = 'login';
