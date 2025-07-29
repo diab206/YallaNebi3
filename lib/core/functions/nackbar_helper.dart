@@ -3,9 +3,6 @@ import 'package:yalla_nebi3/core/const/app_colors.dart';
 
 void showAppSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-      backgroundColor:AppColors.primaryColor,
-    ),
+    SnackBar(content: Text(message), backgroundColor: AppColors.primaryColor),
   );
 }

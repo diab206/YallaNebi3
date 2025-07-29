@@ -9,12 +9,10 @@ class MyOrdersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildCustomAppBar(context, 'My Orders'),
-      body: Padding(padding: 
-        const EdgeInsets.all(8.0),
-      child:ProductList(
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics( ) 
-      )  ));
-
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ProductList(shrinkWrap: true, physics: BouncingScrollPhysics()),
+      ),
+    );
   }
 }

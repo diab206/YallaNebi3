@@ -32,7 +32,6 @@ class SignUpViewState extends State<SignUpView> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is SignUpSuccess) {
-        
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => MainHomeView()),

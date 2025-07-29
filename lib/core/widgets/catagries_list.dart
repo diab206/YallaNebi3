@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 
 class CatagriesList extends StatelessWidget {
-  const CatagriesList({
-    super.key,
-  });
+  const CatagriesList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +21,7 @@ class CatagriesList extends StatelessWidget {
                   radius: 30,
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.backgroundcolor,
-                  child: Icon(
-                    catogries[index].icon,
-                    size: 30,
-                  ),
+                  child: Icon(catogries[index].icon, size: 30),
                 ),
                 const SizedBox(height: 4),
                 Text(catogries[index].text),

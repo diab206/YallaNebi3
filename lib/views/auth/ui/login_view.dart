@@ -31,14 +31,13 @@ class _LoginViewState extends State<LoginView> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-        
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => MainHomeView()),
           );
         }
         if (state is LoginFailure) {
-          showAppSnackBar(context, state.errorMessage,);
+          showAppSnackBar(context, state.errorMessage);
         }
       },
       builder: (context, state) {

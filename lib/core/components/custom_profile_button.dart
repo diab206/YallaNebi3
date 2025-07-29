@@ -36,7 +36,11 @@ class ProfileButton extends StatelessWidget {
                   ),
                 ],
               ),
-              const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+                size: 16,
+              ),
             ],
           ),
         ),

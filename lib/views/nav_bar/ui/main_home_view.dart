@@ -20,57 +20,58 @@ class MainHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return   BlocProvider(
+    return BlocProvider(
       create: (context) => NavBarCubit(),
-      child:   BlocBuilder<NavBarCubit, NavBarState>(
-  
-    builder: (context, state) {
-      NavBarCubit  cubit= context.read<NavBarCubit>();
-     
-        return Scaffold(
-          body: SafeArea(
-          child: views[cubit.currentIndex],
-          ),
-          bottomNavigationBar: Container(
-            decoration: BoxDecoration(color: AppColors.backgroundcolor),
+      child: BlocBuilder<NavBarCubit, NavBarState>(
+        builder: (context, state) {
+          NavBarCubit cubit = context.read<NavBarCubit>();
 
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-              child: GNav(
-               onTabChange: (index){
-                cubit.changeIndex(index); 
-               },
-                rippleColor:
-                    AppColors
-                        .primaryColor, // tab button ripple color when pressed
-                hoverColor: AppColors.primaryColor, // tab button hover color
+          return Scaffold(
+            body: SafeArea(child: views[cubit.currentIndex]),
+            bottomNavigationBar: Container(
+              decoration: BoxDecoration(color: AppColors.backgroundcolor),
 
-                duration: Duration(milliseconds: 400), // tab animation duration
-                gap: 8, // the tab button gap between icon and text
-                color: AppColors.greyColor, // unselected icon color
-                activeColor:
-                    AppColors.backgroundcolor, // selected icon and text color
-                iconSize: 24, // tab button icon size
-                tabBackgroundColor:
-                    AppColors.primaryColor, // selected tab background color
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 5,
-                ), // navigation bar padding
-                tabs: [
-                  GButton(icon: Icons.home, text: 'Home'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 12,
+                ),
+                child: GNav(
+                  onTabChange: (index) {
+                    cubit.changeIndex(index);
+                  },
+                  rippleColor:
+                      AppColors
+                          .primaryColor, // tab button ripple color when pressed
+                  hoverColor: AppColors.primaryColor, // tab button hover color
 
-                  GButton(icon: Icons.store, text: 'Store'),
-                  GButton(icon: Icons.favorite, text: 'Favorite'),
-                  GButton(icon: Icons.person, text: 'Profile'),
-                ],
+                  duration: Duration(
+                    milliseconds: 400,
+                  ), // tab animation duration
+                  gap: 8, // the tab button gap between icon and text
+                  color: AppColors.greyColor, // unselected icon color
+                  activeColor:
+                      AppColors.backgroundcolor, // selected icon and text color
+                  iconSize: 24, // tab button icon size
+                  tabBackgroundColor:
+                      AppColors.primaryColor, // selected tab background color
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ), // navigation bar padding
+                  tabs: [
+                    GButton(icon: Icons.home, text: 'Home'),
+
+                    GButton(icon: Icons.store, text: 'Store'),
+                    GButton(icon: Icons.favorite, text: 'Favorite'),
+                    GButton(icon: Icons.person, text: 'Profile'),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-      )
+          );
+        },
+      ),
     );
-   
   }
 }

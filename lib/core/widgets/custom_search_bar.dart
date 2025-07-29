@@ -20,9 +20,7 @@ class CustomSearchBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundcolor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-         
-        ],
+        boxShadow: [],
       ),
       child: Row(
         children: [

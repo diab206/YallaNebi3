@@ -5,12 +5,7 @@ class CustomTextButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-
-  const CustomTextButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
+  const CustomTextButton({super.key, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class CustomTextButton extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            color:AppColors. primaryColor,
+            color: AppColors.primaryColor,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -31,4 +26,3 @@ class CustomTextButton extends StatelessWidget {
     );
   }
 }
- 

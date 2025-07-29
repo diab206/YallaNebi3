@@ -9,7 +9,6 @@ class UserComments extends StatelessWidget {
       {'username': 'Ahmed', 'comment': 'This is a great post!'},
       {'username': 'Sara', 'comment': 'Thanks for sharing!'},
       {'username': 'Ali', 'comment': 'Looking forward to more content.'},
-      
     ];
 
     return ListView.separated(
@@ -32,12 +31,8 @@ class UserComments extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                comment['comment']!,
-                style: const TextStyle(fontSize: 14),
-              ),
+              Text(comment['comment']!, style: const TextStyle(fontSize: 14)),
               const SizedBox(height: 8),
-            
             ],
           ),
         );

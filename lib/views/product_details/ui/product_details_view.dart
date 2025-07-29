@@ -68,17 +68,14 @@ class ProductDetailsView extends StatelessWidget {
                 SizedBox(height: 20),
                 Column(
                   children: [
-                  Row(
-                    children: [
-                      Text('Comments',style: TextStyle(
-                        fontSize: 20
-                       
-                      )),
-                    ],
-                  ),
-                  UserComments()
-                  
-                  ]),
+                    Row(
+                      children: [
+                        Text('Comments', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+                    UserComments(),
+                  ],
+                ),
               ],
             ),
           ),

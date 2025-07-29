@@ -16,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     required this.hintText,
     this.obscureText = false,
-     this.keyboardType ,
+    this.keyboardType,
     this.prefixIcon,
     this.suffixIcon,
     this.validator,
@@ -39,7 +39,10 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: Colors.grey.shade100,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: Colors.grey.shade300),

@@ -14,13 +14,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 4), () {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) =>  WelcomeScreen()),
+        MaterialPageRoute(builder: (context) => WelcomeScreen()),
         (Route<dynamic> route) => false, // Remove all routes
       );
     });
@@ -29,9 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-backgroundColor: AppColors.backgroundcolor ,
+      backgroundColor: AppColors.backgroundcolor,
 
-  body: Center(
+      body: Center(
         child: SizedBox(
           width: 300, // Set the width of the logo
           height: 300, // Set the height of the logo
@@ -39,7 +38,8 @@ backgroundColor: AppColors.backgroundcolor ,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/splash_logo.png'),
-                fit: BoxFit.contain, // Ensures the logo fits within the SizedBox
+                fit:
+                    BoxFit.contain, // Ensures the logo fits within the SizedBox
               ),
             ),
           ),

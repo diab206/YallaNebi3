@@ -11,15 +11,16 @@ class FavouritView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Text('Your Favourits Products', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+          Center(
+            child: Text(
+              'Your Favourits Products',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
           const SizedBox(height: 16),
-         ProductList()
+          ProductList(),
         ],
       ),
     );
   }
 }
-
-
-
- 

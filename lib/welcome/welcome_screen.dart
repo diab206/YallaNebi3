@@ -22,14 +22,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                   Image.asset(
-                    'assets/images/welcome_screen.png',
-                    width: 350,
-                    height: 350,
-                    fit: BoxFit.contain,
-                   
-                   ),
-                
+                Image.asset(
+                  'assets/images/welcome_screen.png',
+                  width: 350,
+                  height: 350,
+                  fit: BoxFit.contain,
+                ),
+
                 const SizedBox(height: 30),
 
                 // Welcome text
@@ -46,10 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 // Subtitle
                 const Text(
                   'Sign in or create a new account',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
-                  ),
+                  style: TextStyle(fontSize: 16, color: Colors.black87),
                 ),
                 const SizedBox(height: 40),
 

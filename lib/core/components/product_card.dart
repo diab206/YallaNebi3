@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/components/cashed_network_image.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
@@ -8,20 +6,16 @@ import 'package:yalla_nebi3/core/widgets/custom_action_button.dart';
 import 'package:yalla_nebi3/views/product_details/ui/product_details_view.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  const ProductCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-      navigteTo(context, ProductDetailsView());
+        navigteTo(context, ProductDetailsView());
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         child: Column(
           children: [
             Stack(
@@ -33,9 +27,9 @@ class ProductCard extends StatelessWidget {
                     bottomRight: Radius.circular(16.0),
                   ),
                   child: CahedNetworkImage(
-                    url:'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg'
+                    url:
+                        'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg',
                   ),
-      
                 ),
                 Positioned(
                   child: Container(
@@ -108,7 +102,7 @@ class ProductCard extends StatelessWidget {
                           ),
                         ],
                       ),
-      
+
                       CustomActionButton(onPressed: () {}, text: 'Buy Now'),
                     ],
                   ),
@@ -121,4 +115,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-

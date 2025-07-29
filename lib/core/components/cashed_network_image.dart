@@ -4,20 +4,16 @@ import 'package:yalla_nebi3/core/components/custom_circle_indicitor.dart';
 
 class CahedNetworkImage extends StatelessWidget {
   final String url;
-  const CahedNetworkImage({
-    
-    super.key, required this.url,
-  });
+  const CahedNetworkImage({super.key, required this.url});
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl:
-          url,
+      imageUrl: url,
       placeholder:
           (context, url) => SizedBox(
             height: 200,
-          
+
             width: double.infinity,
             child: CustomCircleProgressIndicictor(),
           ),

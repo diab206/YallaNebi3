@@ -8,7 +8,7 @@ class EditName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: buildCustomAppBar(context, 'Edit Name'),
       body: Center(
         child: Padding(
@@ -16,7 +16,6 @@ class EditName extends StatelessWidget {
           child: Column(
             children: [
               CustomTextFormField(
-               
                 hintText: 'Enter your name',
                 keyboardType: TextInputType.name,
                 onChanged: (value) {},
@@ -25,15 +24,13 @@ class EditName extends StatelessWidget {
               CustomActionButton(
                 text: 'update',
                 onPressed: () {
-                
                   Navigator.pop(context);
                 },
-              )
-            ]
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-
 }

@@ -28,8 +28,8 @@ class PerfoileView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-         AuthenticationCubit cubit = context.read<AuthenticationCubit>();
-          UserDataModel? user = context.read<AuthenticationCubit>().userDataModel;
+        AuthenticationCubit cubit = context.read<AuthenticationCubit>();
+        UserDataModel? user = context.read<AuthenticationCubit>().userDataModel;
         return state is LogoutLoading
             ? CustomCircleProgressIndicictor()
             : Center(
@@ -55,15 +55,15 @@ class PerfoileView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                         Text(
-                         user?.name ?? "Guest User",
+                        Text(
+                          user?.name ?? "Guest User",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 5),
-                         Text(
+                        Text(
                           user?.email ?? "Guester Email",
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                           textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/components/product_list.dart';
 import 'package:yalla_nebi3/core/components/custom_search_bar.dart';
-import 'package:yalla_nebi3/views/home/widgets/catagries_list.dart';
+import 'package:yalla_nebi3/core/widgets/catagries_list.dart';
 
 class HomeViews extends StatelessWidget {
   HomeViews({super.key});
@@ -30,11 +30,9 @@ class HomeViews extends StatelessWidget {
           const SizedBox(height: 8),
           CatagriesList(),
           const SizedBox(height: 8),
-         ProductList()
+          ProductList(),
         ],
       ),
     );
   }
 }
-
-

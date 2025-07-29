@@ -4,10 +4,7 @@ import 'package:yalla_nebi3/core/const/app_colors.dart';
 class CustomElevatedIconButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const CustomElevatedIconButton({
-    super.key,
-    required this.onPressed,
-  });
+  const CustomElevatedIconButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +17,9 @@ class CustomElevatedIconButton extends StatelessWidget {
           backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.backgroundcolor,
           shape: RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(16),
-  side: const BorderSide(
-    color: AppColors.primaryColor,
-    width: 2,
-  ),
-),
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: AppColors.primaryColor, width: 2),
+          ),
 
           padding: const EdgeInsets.all(16), // More padding → bigger circle
           elevation: 4,
