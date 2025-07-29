@@ -3,10 +3,12 @@ import 'package:yalla_nebi3/core/components/cashed_network_image.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/core/widgets/custom_action_button.dart';
+import 'package:yalla_nebi3/models/product_model/product_model.dart';
 import 'package:yalla_nebi3/views/product_details/ui/product_details_view.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  const ProductCard({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: CahedNetworkImage(
                     url:
+                    product.imageUrl ??
                         'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg',
                   ),
                 ),
@@ -45,7 +48,7 @@ class ProductCard extends StatelessWidget {
                     height: 50,
                     alignment: Alignment.center,
                     child: Text(
-                      '10 % OFF ',
+                      '${product.sale} % OFF ',
                       style: TextStyle(
                         color: AppColors.backgroundcolor,
                         fontSize: 20,
@@ -65,6 +68,7 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        product.productName ??
                         'Product Name',
                         style: TextStyle(
                           fontSize: 18,
@@ -86,14 +90,14 @@ class ProductCard extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            '100 LE',
+                            '${product.price }  LE',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            '120 LE',
+                           '${product.oldPrice }  LE',
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColors.greyColor,
