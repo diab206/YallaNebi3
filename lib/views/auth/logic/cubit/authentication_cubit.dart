@@ -116,9 +116,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
       if (data.isNotEmpty) {
         userDataModel = UserDataModel.fromJson(data.first);
-        log('Name: ${userDataModel!.name}');
-        log('Email: ${userDataModel!.email}');
-        log('User ID: ${userDataModel!.userId}');
+    //    log('Name: ${userDataModel!.name}');
+     //   log('Email: ${userDataModel!.email}');
+    //    log('User ID: ${userDataModel!.userId}');
         emit(GetUserDataSuccess());
       } else {
         log('User not found in Supabase');
