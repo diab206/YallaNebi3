@@ -30,7 +30,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: CahedNetworkImage(
                     url:
-                    product.imageUrl ??
+                        product.imageUrl ??
                         'https://images.pexels.com/photos/416753/pexels-photo-416753.jpeg',
                   ),
                 ),
@@ -68,8 +68,7 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        product.productName ??
-                        'Product Name',
+                        product.productName ?? 'Product Name',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -90,14 +89,14 @@ class ProductCard extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            '${product.price }  LE',
+                            '${product.price}  LE',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                           '${product.oldPrice }  LE',
+                            '${product.oldPrice}  LE',
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColors.greyColor,
