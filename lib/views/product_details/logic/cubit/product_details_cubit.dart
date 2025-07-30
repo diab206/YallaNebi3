@@ -12,6 +12,26 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductDetailsCubit() : super(ProductDetailsInitial());
  final ApiServices _apiService = ApiServices();
  List <Rates> rates = [];
+  double averageRate = 0.0;
+
+  Future<void> getProductDetails(String productId) async {
+    emit(ProductDetailsLoading());
+    try {
+      Response response = await _apiService.getData('products_table?select=*&id=eq.$productId');
+      if (response.data.isNotEmpty) {
+        for (var rate in response.data) {
+          rates.add(Rates.fromJson(rate));
+        }
+       getAverageRate();
+        emit(ProductDetailsSuccess());
+      } else {
+        emit(ProductDetailsError());
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(ProductDetailsError());
+    }
+  }
 
  Future<void>getRates({required String productId}) async {
   emit(ProductDetailsLoading());
@@ -21,6 +41,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
      for(var rate in response.data) {
       rates.add(Rates.fromJson(rate));
  }
+    getAverageRate();
+   
  emit(ProductDetailsSuccess());
  }
  catch (e) {
@@ -29,4 +51,26 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   }
 
  }
+ void getAverageRate() {
+    if (rates.isEmpty) {
+      averageRate = 0.0;
+      return;
+    }
+    
+    int totalRate = 0;
+    int validRatesCount = 0;
+    
+    for (var userRate in rates) {
+      if (userRate.rate != null) {
+        totalRate += userRate.rate!;
+        validRatesCount++;
+      }
+    }
+    
+    if (validRatesCount > 0) {
+      averageRate = totalRate / validRatesCount;
+    } else {
+      averageRate = 0.0;
+    }
+  }
 }
