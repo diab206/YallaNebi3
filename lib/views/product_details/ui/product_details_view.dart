@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -21,8 +20,16 @@ class ProductDetailsView extends StatelessWidget {
           (context) =>
               ProductDetailsCubit()..getRates(productId: product.productId!),
       child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-        listener: (context, state) {
-          
+        listener: (context, state)async {
+          if(state is AddOrUpdateRateSuccess) {
+           Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (context) => ProductDetailsView(product: product),
+  ),
+);
+
+        }
         },
         builder: (context, state) {
           ProductDetailsCubit cubit = context.read<ProductDetailsCubit>();
@@ -32,7 +39,9 @@ class ProductDetailsView extends StatelessWidget {
               product.productName ?? 'Product Name',
             ),
             body: 
-            state is ProductDetailsLoading?CircularProgressIndicator():
+            state is ProductDetailsLoading
+           
+            ?CircularProgressIndicator():
             ListView(
               children: [
                 CahedNetworkImage(
@@ -79,9 +88,15 @@ class ProductDetailsView extends StatelessWidget {
                             (context, _) =>
                                 Icon(Icons.star, color: Colors.amber),
                         onRatingUpdate: (rating) {
-                          if (kDebugMode) {
-                            print(rating);
-                          }
+                         cubit.addOrUpdateUserRate(
+                            productId: product.productId!,
+                           data:{
+                         
+        "rate": rating.toInt(),
+        "for_user":cubit.userId, 
+        "for_product": product.productId,
+                           }
+                          );
                         },
                       ),
                       SizedBox(height: 40),
