@@ -24,13 +24,14 @@ class ProductList extends StatelessWidget {
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
+          HomeCubit homeCubit = context.read<HomeCubit>();
           List<ProductModel> products =
               query != null
-                  ? context.read<HomeCubit>().searchResults
+                  ?homeCubit.searchResults
                   : category != null
-                  ? context.read<HomeCubit>().categoryProduct
+                  ? homeCubit.categoryProduct
                   // If neither query nor category is provided, use all products
-                  : context.read<HomeCubit>().products;
+                  : homeCubit.products;
           return state is GetDataLoading
               ? const CircularProgressIndicator()
               : ListView.builder(
@@ -38,7 +39,11 @@ class ProductList extends StatelessWidget {
                 physics: physics ?? NeverScrollableScrollPhysics(),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
-                  return ProductCard(product: products[index]);
+                  return ProductCard(
+                    onTap: (){
+                      homeCubit.addProductToFavourite( products[index].productId!);
+                    },
+                    product: products[index]);
                 },
               );
         },
