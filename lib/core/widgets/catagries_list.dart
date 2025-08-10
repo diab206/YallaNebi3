@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
+import 'package:yalla_nebi3/views/home/ui/catogries_view.dart';
 
 class CatagriesList extends StatelessWidget {
   const CatagriesList({super.key});
@@ -14,18 +16,23 @@ class CatagriesList extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: AppColors.primaryColor,
-                  foregroundColor: AppColors.backgroundcolor,
-                  child: Icon(catogries[index].icon, size: 30),
-                ),
-                const SizedBox(height: 4),
-                Text(catogries[index].text),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                navigteTo(context, CatogriesView(category: catogries[index].text));
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: AppColors.backgroundcolor,
+                    child: Icon(catogries[index].icon, size: 30),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(catogries[index].text),
+                ],
+              ),
             ),
           );
         },
@@ -47,4 +54,5 @@ List<Catogry> catogries = [
   Catogry(text: 'Collections', icon: Icons.collections),
   Catogry(text: 'Books', icon: Icons.book),
   Catogry(text: 'Games', icon: Icons.games),
+  Catogry(text: 'Bikes', icon: Icons.bike_scooter),
 ];
