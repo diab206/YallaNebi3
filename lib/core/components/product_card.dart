@@ -7,9 +7,10 @@ import 'package:yalla_nebi3/models/product_model/product_model.dart';
 import 'package:yalla_nebi3/views/product_details/ui/product_details_view.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product, this.onTap});
+  const ProductCard({super.key, required this.product, this.onTap,  required this.isFavourit,});
   final ProductModel product;
   final Function()? onTap;
+  final bool isFavourit;  
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +79,8 @@ class ProductCard extends StatelessWidget {
                       IconButton(
                         onPressed: onTap,
                         icon: Icon(
-                          Icons.favorite_border,
-                          color: AppColors.greyColor,
+                          Icons.favorite,
+                          color:isFavourit? AppColors.primaryColor: AppColors.greyColor,
                         ),
                       ),
                     ],

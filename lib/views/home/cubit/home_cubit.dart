@@ -52,7 +52,7 @@ class HomeCubit extends Cubit<HomeState> {
       }
     }
   }
-
+  Map<String, bool> favouriteProducts = {};
   Future<void> addProductToFavourite(String productId) async {
     emit(AddProductToFavouriteLoading());
     try {
@@ -61,10 +61,14 @@ class HomeCubit extends Cubit<HomeState> {
         'for_user': userId,
         'for_product': productId,
       });
-      emit(AddProductToFavouriteSuccess());
+     favouriteProducts.addAll({productId: true});
+           emit(AddProductToFavouriteSuccess());
     } catch (e) {
       log(e.toString());
       emit(AddProductToFavouriteError());
     }
+  }
+  bool checkIsFavourite(String productId) {
+    return favouriteProducts.containsKey(productId);
   }
 }
