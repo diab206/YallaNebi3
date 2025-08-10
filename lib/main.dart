@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:yalla_nebi3/core/sensetive_data.dart';
+import 'package:device_preview/device_preview.dart';
 
+import 'package:yalla_nebi3/core/sensetive_data.dart';
 import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
 import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
@@ -13,7 +14,14 @@ import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeSupabase();
-  runApp(const YallaNebi3());
+
+  runApp(
+    DevicePreview(
+      enabled: true, // force on
+      builder: (context) => const YallaNebi3(),
+    ),
+  );
+
 }
 
 Future<void> _initializeSupabase() async {
@@ -42,10 +50,13 @@ class YallaNebi3 extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute:
-            client.auth.currentSession != null
-                ? MainHomeView.routeName
-                : SplashScreen.routeName,
+        // ignore: deprecated_member_use
+        useInheritedMediaQuery: true, // ✅ Required for device_preview
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        initialRoute: client.auth.currentSession != null
+            ? MainHomeView.routeName
+            : SplashScreen.routeName,
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),

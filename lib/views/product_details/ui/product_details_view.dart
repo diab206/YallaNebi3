@@ -158,7 +158,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       ),
                                     ],
                                   ),
-                                  UserComments(),
+                                  UserComments(productModel: widget.product,),
                                 ],
                               ),
                             ],
