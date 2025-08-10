@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yalla_nebi3/core/components/product_list.dart';
 import 'package:yalla_nebi3/core/components/custom_search_bar.dart';
+import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
 import 'package:yalla_nebi3/core/widgets/catagries_list.dart';
+import 'package:yalla_nebi3/views/home/ui/search_view.dart';
 
 class HomeViews extends StatelessWidget {
   HomeViews({super.key});
@@ -17,7 +19,9 @@ class HomeViews extends StatelessWidget {
           CustomSearchBar(
             controller: searchController,
             hintText: 'Search in Market....',
-            onSearch: () {},
+            onSearch: () {
+              navigteTo(context, SearchView());
+            }
           ),
           const SizedBox(height: 16),
           Image.asset(
