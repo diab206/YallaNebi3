@@ -16,6 +16,10 @@ class HomeCubit extends Cubit<HomeState> {
   List<ProductModel> categoryProduct = [];
   final String userId = Supabase.instance.client.auth.currentUser!.id;
   Future<void> getProducts({String? query, String? category}) async {
+    products.clear();
+    searchResults.clear();
+    categoryProduct.clear();
+    favouriteProducts.clear();
     emit(GetDataLoading());
     try {
       Response response = await _apiServices.getData(
@@ -65,6 +69,7 @@ class HomeCubit extends Cubit<HomeState> {
         'for_user': userId,
         'for_product': productId,
       });
+      await getProducts();
       favouriteProducts.addAll({productId: true});
       emit(AddProductToFavouriteSuccess());
     } catch (e) {
@@ -84,7 +89,7 @@ class HomeCubit extends Cubit<HomeState> {
       await _apiServices.deleteData(
         "favourit_products?for_user=eq.$userId&for_product=eq.$productId",
       );
-
+      await getProducts();
       favouriteProducts.removeWhere((key, value) => key == productId);
       emit(RemoveProductFromFavouriteSuccess());
     } catch (e) {
@@ -96,17 +101,25 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<ProductModel> favouriteProductsList = [];
 
-  void getFavouriteProducts() {
-    for (ProductModel product in products) {
-      if (product.favouritProducts != null &&
-          product.favouritProducts!.isNotEmpty) {
-        for (FavouritProduct favouritProduct in product.favouritProducts!) {
-          if (favouritProduct.forUser == userId) {
-            favouriteProductsList.add(product);
-           favouriteProducts.addAll({product.productId!: true});         }
+void getFavouriteProducts() {
+  favouriteProductsList.clear();
+  favouriteProducts.clear();
+
+  for (ProductModel product in products) {
+    if (product.favouritProducts != null && product.favouritProducts!.isNotEmpty) {
+      for (FavouritProduct favouritProduct in product.favouritProducts!) {
+        if (favouritProduct.forUser == userId) {
+          favouriteProductsList.add(product);
+          favouriteProducts[product.productId!] = true;
         }
       }
     }
+  }
+
+  if (favouriteProductsList.isNotEmpty) {
     log(favouriteProductsList[0].productName.toString());
   }
 }
+
+  }
+

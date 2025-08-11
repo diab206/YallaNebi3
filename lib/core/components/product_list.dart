@@ -9,48 +9,62 @@ class ProductList extends StatelessWidget {
   final ScrollPhysics? physics;
   final String? query;
   final String? category;
+  final bool showFavourites; // NEW
+
   const ProductList({
     super.key,
     this.shrinkWrap,
     this.physics,
     this.query,
     this.category,
+    this.showFavourites = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..getProducts(query: query, category: category),
+      create: (context) => HomeCubit()
+        ..getProducts(query: query, category: category),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
           HomeCubit homeCubit = context.read<HomeCubit>();
-          List<ProductModel> products =
-              query != null
-                  ?homeCubit.searchResults
+
+          List<ProductModel> products = showFavourites
+              ? homeCubit.favouriteProductsList
+              : query != null
+                  ? homeCubit.searchResults
                   : category != null
-                  ? homeCubit.categoryProduct
-                  // If neither query nor category is provided, use all products
-                  : homeCubit.products;
+                      ? homeCubit.categoryProduct
+                      : homeCubit.products;
+
           return state is GetDataLoading
-              ? const CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
-                shrinkWrap: shrinkWrap ?? true,
-                physics: physics ?? NeverScrollableScrollPhysics(),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return ProductCard(
-                    isFavourit: homeCubit.checkIsFavourite(products[index].productId!),
-                   
-                    onTap: (){
-                      bool isFavourite = homeCubit.checkIsFavourite(products[index].productId!);
-                      isFavourite?
-                        homeCubit.removeProduct(products[index].productId!):
-                      homeCubit.addProductToFavourite( products[index].productId!);
-                    },
-                    product: products[index]);
-                },
-              );
+                  shrinkWrap: shrinkWrap ?? true,
+                  physics: physics ?? const NeverScrollableScrollPhysics(),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return ProductCard(
+                      isFavourit: homeCubit.checkIsFavourite(
+                        products[index].productId!,
+                      ),
+                      onTap: () {
+                        bool isFavourite = homeCubit.checkIsFavourite(
+                          products[index].productId!,
+                        );
+                        isFavourite
+                            ? homeCubit.removeProduct(
+                                products[index].productId!,
+                              )
+                            : homeCubit.addProductToFavourite(
+                                products[index].productId!,
+                              );
+                      },
+                      product: products[index],
+                    );
+                  },
+                );
         },
       ),
     );
