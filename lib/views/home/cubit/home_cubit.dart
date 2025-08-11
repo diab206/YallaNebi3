@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:yalla_nebi3/core/api_services.dart';
+import 'package:yalla_nebi3/models/product_model/favourit_product.dart';
 import 'package:yalla_nebi3/models/product_model/product_model.dart';
 part 'home_state.dart';
 
@@ -23,6 +24,8 @@ class HomeCubit extends Cubit<HomeState> {
       for (var product in response.data) {
         products.add(ProductModel.fromJson(product));
       }
+      getFavouriteProducts();
+      // Filter products based on query and category
       search(query);
       getProductsByCatogries(category);
       emit(GetDataSucess());
@@ -89,7 +92,21 @@ class HomeCubit extends Cubit<HomeState> {
       emit(RemoveProductFromFavouriteError());
     }
   }
+  // get favourite products
 
- 
-  
+  List<ProductModel> favouriteProductsList = [];
+
+  void getFavouriteProducts() {
+    for (ProductModel product in products) {
+      if (product.favouritProducts != null &&
+          product.favouritProducts!.isNotEmpty) {
+        for (FavouritProduct favouritProduct in product.favouritProducts!) {
+          if (favouritProduct.forUser == userId) {
+            favouriteProductsList.add(product);
+           favouriteProducts.addAll({product.productId!: true});         }
+        }
+      }
+    }
+    log(favouriteProductsList[0].productName.toString());
+  }
 }
