@@ -52,6 +52,7 @@ class HomeCubit extends Cubit<HomeState> {
       }
     }
   }
+
   Map<String, bool> favouriteProducts = {};
   Future<void> addProductToFavourite(String productId) async {
     emit(AddProductToFavouriteLoading());
@@ -61,14 +62,34 @@ class HomeCubit extends Cubit<HomeState> {
         'for_user': userId,
         'for_product': productId,
       });
-     favouriteProducts.addAll({productId: true});
-           emit(AddProductToFavouriteSuccess());
+      favouriteProducts.addAll({productId: true});
+      emit(AddProductToFavouriteSuccess());
     } catch (e) {
       log(e.toString());
       emit(AddProductToFavouriteError());
     }
   }
+
   bool checkIsFavourite(String productId) {
     return favouriteProducts.containsKey(productId);
   }
+
+  // Remove product from favourites
+  Future<void> removeProduct(String productId) async {
+    emit(RemoveProductFromFavouriteLoading());
+    try {
+      await _apiServices.deleteData(
+        "favourit_products?for_user=eq.$userId&for_product=eq.$productId",
+      );
+
+      favouriteProducts.removeWhere((key, value) => key == productId);
+      emit(RemoveProductFromFavouriteSuccess());
+    } catch (e) {
+      log(e.toString());
+      emit(RemoveProductFromFavouriteError());
+    }
+  }
+
+ 
+  
 }

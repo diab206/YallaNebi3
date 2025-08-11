@@ -43,6 +43,9 @@ class ProductList extends StatelessWidget {
                     isFavourit: homeCubit.checkIsFavourite(products[index].productId!),
                    
                     onTap: (){
+                      bool isFavourite = homeCubit.checkIsFavourite(products[index].productId!);
+                      isFavourite?
+                        homeCubit.removeProduct(products[index].productId!):
                       homeCubit.addProductToFavourite( products[index].productId!);
                     },
                     product: products[index]);

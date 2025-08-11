@@ -22,6 +22,7 @@ class ApiServices {
   }
 
   Future<Response> deleteData(String path) async {
-    return await _dio.get(path);
+    return await _dio.delete(path);
   }
+  
 }
