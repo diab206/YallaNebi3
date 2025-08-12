@@ -20,6 +20,7 @@ class MainHomeView extends StatefulWidget {
 
 class _MainHomeViewState extends State<MainHomeView> {
   late List<Widget> views;
+  @override
   initState() {
     views = [
     HomeViews(userDataModel: widget.userDataModel,),

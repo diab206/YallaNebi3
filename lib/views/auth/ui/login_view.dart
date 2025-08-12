@@ -16,6 +16,7 @@ class LoginView extends StatefulWidget {
 
   const LoginView({super.key});
 
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -30,9 +31,14 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is LoginSuccess) {
-          Navigator.pushReplacementNamed(context, MainHomeView.routeName);
-        }
+       if (state is LoginSuccess) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => MainHomeView(userDataModel: context.read<AuthenticationCubit>().userDataModel!),
+    ),
+  );
+}
 
         if (state is LoginFailure) {
           showAppSnackBar(context, state.errorMessage);
@@ -48,155 +54,165 @@ class _LoginViewState extends State<LoginView> {
             ),
             centerTitle: true,
           ),
-          body: state is LoginLoading
-              ? CustomCircleProgressIndicictor()
-              : SafeArea(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24),
-                      child: Form(
-                        key: _formKey,
-                        child: Center(
-                          child: Card(
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(24),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-
-                                  /// Email Field
-                                  CustomTextFormField(
-                                    controller: emailController,
-                                    hintText: 'Enter your email',
-                                    keyboardType: TextInputType.emailAddress,
-                                    prefixIcon: const Icon(Icons.email),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Email is required';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-
-                                  /// Password Field with Eye Icon
-                                  CustomTextFormField(
-                                    keyboardType: TextInputType.visiblePassword,
-                                    controller: passwordController,
-                                    hintText: 'Enter your password',
-                                    obscureText: _obscurePassword,
-                                    prefixIcon: const Icon(Icons.lock),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        _obscurePassword
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
+          body:
+              state is LoginLoading
+                  ? CustomCircleProgressIndicictor()
+                  : SafeArea(
+                    child: Center(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(24),
+                        child: Form(
+                          key: _formKey,
+                          child: Center(
+                            child: Card(
+                              elevation: 8,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _obscurePassword = !_obscurePassword;
-                                        });
+                                    ),
+                                    const SizedBox(height: 20),
+
+                                    /// Email Field
+                                    CustomTextFormField(
+                                      controller: emailController,
+                                      hintText: 'Enter your email',
+                                      keyboardType: TextInputType.emailAddress,
+                                      prefixIcon: const Icon(Icons.email),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Email is required';
+                                        }
+                                        return null;
                                       },
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Password is required';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
+                                    const SizedBox(height: 16),
 
-                                  /// Forgot Password
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      CustomTextButton(
-                                        text: 'Forgot Password?',
-                                        onTap: () {
-                                          navigteTo(context, ForgotView());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-
-                                  const SizedBox(height: 24),
-
-                                  /// Login Row
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        'Login',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
+                                    /// Password Field with Eye Icon
+                                    CustomTextFormField(
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
+                                      controller: passwordController,
+                                      hintText: 'Enter your password',
+                                      obscureText: _obscurePassword,
+                                      prefixIcon: const Icon(Icons.lock),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
                                         ),
-                                      ),
-                                      CustomElevatedIconButton(
                                         onPressed: () {
-                                          if (_formKey.currentState!.validate()) {
-                                            cubit.login(
-                                              email: emailController.text,
-                                              password: passwordController.text,
-                                            );
-                                          }
+                                          setState(() {
+                                            _obscurePassword =
+                                                !_obscurePassword;
+                                          });
                                         },
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Password is required';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 16),
 
-                                  /// Login with Google Row
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        'Login With Google',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
+                                    /// Forgot Password
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        CustomTextButton(
+                                          text: 'Forgot Password?',
+                                          onTap: () {
+                                            navigteTo(context, ForgotView());
+                                          },
                                         ),
-                                      ),
-                                      CustomElevatedIconButton(
-                                        onPressed: () {
-                                          // TODO: Implement Google login
-                                          // For now, just navigate to main (remove this in production)
-                                          Navigator.pushReplacementNamed(
-                                              context, MainHomeView.routeName);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Don\'t have an account? ',
-                                        style: TextStyle(fontSize: 22),
-                                      ),
-                                      CustomTextButton(
-                                        text: 'Sign Up',
-                                        onTap: () {
-                                          navigteTo(context, SignUpView());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+
+                                    const SizedBox(height: 24),
+
+                                    /// Login Row
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Login',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        CustomElevatedIconButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              cubit.login(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+
+                                    /// Login with Google Row
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          'Login With Google',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        CustomElevatedIconButton(
+                                          onPressed:
+                                              () => navigteTo(
+                                                context,
+                                                MainHomeView(
+                                            userDataModel:       context.read<AuthenticationCubit>().userDataModel!
+                                                ),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Don\'t have an account? ',
+                                          style: TextStyle(fontSize: 22),
+                                        ),
+                                        CustomTextButton(
+                                          text: 'Sign Up',
+                                          onTap: () {
+                                            navigteTo(context, SignUpView());
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -204,7 +220,6 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                ),
         );
       },
     );

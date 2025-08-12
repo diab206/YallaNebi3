@@ -11,6 +11,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(AuthenticationInitial());
 
   final SupabaseClient client = Supabase.instance.client;
+  UserDataModel? userDataModel; 
+
 
   Future<void> login({required String email, required String password}) async {
     if (!isClosed) emit(LoginLoading());
@@ -40,29 +42,31 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   Future<void> register({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    if (!isClosed) emit(SignUpLoading());
-    try {
-      await client.auth.signUp(email: email, password: password);
-      if (isClosed) return;
+  required String name,
+  required String email,
+  required String password,
+}) async {
+  if (!isClosed) emit(SignUpLoading());
+  try {
+    await client.auth.signUp(email: email, password: password);
+    if (isClosed) return;
 
-      // Ensure user data is fetched/created before emitting success
-      await getUserData();
-      if (isClosed) return;
+    await addUserData(email: email, name: name);
+    if (isClosed) return;
+    
+    // Refresh user data to get the newly created user
+    await getUserData();
+    if (isClosed) return;
 
-      await addUserData(email: email, name: name);
-      if (!isClosed) emit(SignUpSuccess());
-    } on AuthException catch (e) {
-      log('Auth Exception during registration: ${e.toString()}');
-      if (!isClosed) emit(SignUpFailure(errorMessage: e.message));
-    } catch (e) {
-      log('General Exception during registration: ${e.toString()}');
-      if (!isClosed) emit(SignUpFailure(errorMessage: e.toString()));
-    }
+    if (!isClosed) emit(SignUpSuccess());
+  } on AuthException catch (e) {
+    log('Auth Exception during registration: ${e.toString()}');
+    if (!isClosed) emit(SignUpFailure(errorMessage: e.message));
+  } catch (e) {
+    log('General Exception during registration: ${e.toString()}');
+    if (!isClosed) emit(SignUpFailure(errorMessage: e.toString()));
   }
+}
 
   // Helper method to get current user
   User? getCurrentUser() {
@@ -70,15 +74,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   // Helper method to sign out
-  Future<void> signOut() async {
-    try {
-      await client.auth.signOut();
-      if (!isClosed) emit(LogoutSuccess());
-    } catch (e) {
-      log(e.toString());
-      if (!isClosed) emit(LogoutFailure());
-    }
+Future<void> signOut() async {
+  try {
+    await client.auth.signOut();
+    userDataModel = null; // Clear cached user data
+    if (!isClosed) emit(LogoutSuccess());
+  } catch (e) {
+    log(e.toString());
+    if (!isClosed) emit(LogoutFailure());
   }
+}
 
   Future<void> resetPassword(String email) async {
     if (!isClosed) emit(ResetpasswordLoading());
@@ -109,7 +114,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  UserDataModel? userDataModel;
 
   Future<void> getUserData() async {
     if (!isClosed) emit(GetUserDataLoading());
