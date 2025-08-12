@@ -17,7 +17,7 @@ void main() async {
 
   runApp(
     DevicePreview(
-      enabled: true, // force on
+      enabled: false, 
       builder: (context) => const YallaNebi3(),
     ),
   );
@@ -25,6 +25,7 @@ void main() async {
 }
 
 Future<void> _initializeSupabase() async {
+  debugPrint('Initializing Supabase...');
   await Supabase.initialize(
     url: supabaseUrl,
     anonKey: anonKey,
@@ -32,6 +33,7 @@ Future<void> _initializeSupabase() async {
       authFlowType: AuthFlowType.pkce,
     ),
   );
+  debugPrint('Supabase initialized ✅');
 }
 
 class YallaNebi3 extends StatelessWidget {

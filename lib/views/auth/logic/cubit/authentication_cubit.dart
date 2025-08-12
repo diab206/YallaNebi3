@@ -10,29 +10,32 @@ part 'authentication_state.dart';
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(AuthenticationInitial());
 
-  SupabaseClient client = Supabase.instance.client;
+  final SupabaseClient client = Supabase.instance.client;
 
   Future<void> login({required String email, required String password}) async {
-    emit(LoginLoading());
+    if (!isClosed) emit(LoginLoading());
     try {
       final AuthResponse response = await client.auth.signInWithPassword(
         password: password,
         email: email,
       );
-      getUserData();
+
+      // Await getUserData so we only proceed after its completion
+      await getUserData();
+      if (isClosed) return;
 
       if (response.user != null) {
         log('Login successful for user: ${response.user!.email}');
-        emit(LoginSuccess());
+        if (!isClosed) emit(LoginSuccess());
       } else {
-        emit(LoginFailure(errorMessage: 'Login failed'));
+        if (!isClosed) emit(LoginFailure(errorMessage: 'Login failed'));
       }
     } on AuthException catch (e) {
       log('Auth Exception: ${e.toString()}');
-      emit(LoginFailure(errorMessage: e.message));
+      if (!isClosed) emit(LoginFailure(errorMessage: e.message));
     } catch (e) {
       log('General Exception: ${e.toString()}');
-      emit(LoginFailure(errorMessage: e.toString()));
+      if (!isClosed) emit(LoginFailure(errorMessage: e.toString()));
     }
   }
 
@@ -41,19 +44,23 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required String email,
     required String password,
   }) async {
-    emit(SignUpLoading());
+    if (!isClosed) emit(SignUpLoading());
     try {
       await client.auth.signUp(email: email, password: password);
-      getUserData();
+      if (isClosed) return;
+
+      // Ensure user data is fetched/created before emitting success
+      await getUserData();
+      if (isClosed) return;
 
       await addUserData(email: email, name: name);
-      emit(SignUpSuccess());
+      if (!isClosed) emit(SignUpSuccess());
     } on AuthException catch (e) {
       log('Auth Exception during registration: ${e.toString()}');
-      emit(SignUpFailure(errorMessage: e.message));
+      if (!isClosed) emit(SignUpFailure(errorMessage: e.message));
     } catch (e) {
       log('General Exception during registration: ${e.toString()}');
-      emit(SignUpFailure(errorMessage: e.toString()));
+      if (!isClosed) emit(SignUpFailure(errorMessage: e.toString()));
     }
   }
 
@@ -66,21 +73,21 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> signOut() async {
     try {
       await client.auth.signOut();
-      emit(LogoutSuccess());
+      if (!isClosed) emit(LogoutSuccess());
     } catch (e) {
       log(e.toString());
-      emit(LogoutFailure());
+      if (!isClosed) emit(LogoutFailure());
     }
   }
 
   Future<void> resetPassword(String email) async {
-    emit(ResetpasswordLoading());
+    if (!isClosed) emit(ResetpasswordLoading());
     try {
       await client.auth.resetPasswordForEmail(email);
-      emit(ResetpasswordSuccess());
+      if (!isClosed) emit(ResetpasswordSuccess());
     } catch (e) {
       log(e.toString());
-      emit(ResetpasswordFailure());
+      if (!isClosed) emit(ResetpasswordFailure());
     }
   }
 
@@ -88,24 +95,24 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required String name,
     required String email,
   }) async {
-    emit(UserDataAddedLoading());
+    if (!isClosed) emit(UserDataAddedLoading());
     try {
       await client.from('users').insert({
         'id': client.auth.currentUser?.id,
         'name': name,
         'email': email,
       });
-      emit(UserDataAddedSuccess());
+      if (!isClosed) emit(UserDataAddedSuccess());
     } catch (e) {
       log(e.toString());
-      emit(UserDataAddedFailure());
+      if (!isClosed) emit(UserDataAddedFailure());
     }
   }
 
   UserDataModel? userDataModel;
 
   Future<void> getUserData() async {
-    emit(GetUserDataLoading());
+    if (!isClosed) emit(GetUserDataLoading());
 
     try {
       final data = await client
@@ -114,19 +121,18 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           .eq("id", client.auth.currentUser!.id)
           .limit(1);
 
+      if (isClosed) return;
+
       if (data.isNotEmpty) {
         userDataModel = UserDataModel.fromJson(data.first);
-    //    log('Name: ${userDataModel!.name}');
-     //   log('Email: ${userDataModel!.email}');
-    //    log('User ID: ${userDataModel!.userId}');
-        emit(GetUserDataSuccess());
+        if (!isClosed) emit(GetUserDataSuccess());
       } else {
         log('User not found in Supabase');
-        emit(GetUserDataFailure());
+        if (!isClosed) emit(GetUserDataFailure());
       }
     } catch (e) {
       log('Error: $e');
-      emit(GetUserDataFailure());
+      if (!isClosed) emit(GetUserDataFailure());
     }
   }
 }

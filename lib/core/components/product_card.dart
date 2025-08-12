@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:pay_with_paymob/pay_with_paymob.dart';
 import 'package:yalla_nebi3/core/components/cashed_network_image.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
@@ -7,16 +10,21 @@ import 'package:yalla_nebi3/models/product_model/product_model.dart';
 import 'package:yalla_nebi3/views/product_details/ui/product_details_view.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product, this.onTap,  required this.isFavourit,});
+  const ProductCard({
+    super.key,
+    required this.product,
+    this.onTap,
+    required this.isFavourit,
+  });
   final ProductModel product;
   final Function()? onTap;
-  final bool isFavourit;  
+  final bool isFavourit;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigteTo(context, ProductDetailsView(product: product,));
+        navigteTo(context, ProductDetailsView(product: product));
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -80,7 +88,10 @@ class ProductCard extends StatelessWidget {
                         onPressed: onTap,
                         icon: Icon(
                           Icons.favorite,
-                          color:isFavourit? AppColors.primaryColor: AppColors.greyColor,
+                          color:
+                              isFavourit
+                                  ? AppColors.primaryColor
+                                  : AppColors.greyColor,
                         ),
                       ),
                     ],
@@ -108,7 +119,28 @@ class ProductCard extends StatelessWidget {
                         ],
                       ),
 
-                      CustomActionButton(onPressed: () {}, text: 'Buy Now'),
+                      CustomActionButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => PaymentView(
+                                    onPaymentSuccess: () {
+                                      log('payment success');
+                                    },
+                                    onPaymentError: () {
+                                      log('payment failure');
+                                    },
+                                    price: double.parse(
+                                      product.price !,
+                                    ), // Required: Total price (e.g., 100 for 100 EGP)
+                                  ),
+                            ),
+                          );
+                        },
+                        text: 'Buy Now',
+                      ),
                     ],
                   ),
                 ],
