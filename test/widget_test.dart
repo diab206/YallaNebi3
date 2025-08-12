@@ -13,7 +13,7 @@ import 'package:yalla_nebi3/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const YallaNebi3());
+    await tester.pumpWidget( YallaNebi3());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

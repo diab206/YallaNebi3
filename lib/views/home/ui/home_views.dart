@@ -4,12 +4,14 @@ import 'package:yalla_nebi3/core/components/product_list.dart';
 import 'package:yalla_nebi3/core/components/custom_search_bar.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/functions/naviagte_to.dart';
+import 'package:yalla_nebi3/core/models/user_data_model.dart';
 import 'package:yalla_nebi3/core/sensetive_data.dart';
 import 'package:yalla_nebi3/core/widgets/catagries_list.dart';
 import 'package:yalla_nebi3/views/home/ui/search_view.dart';
 
 class HomeViews extends StatefulWidget {
-  const HomeViews({super.key});
+  const HomeViews({super.key,required this.userDataModel});
+ final UserDataModel userDataModel;
 
   @override
   State<HomeViews> createState() => _HomeViewsState();
@@ -28,10 +30,10 @@ class _HomeViewsState extends State<HomeViews> {
           integrationMobileWalletId, // Required: Found under Developers -> Payment Integrations -> Mobile Wallet ID
       // Optional User Data
       userData: UserData(
-        email: "User Email", // Optional: Defaults to 'NA'
-        phone: "User Phone", // Optional: Defaults to 'NA'
+        email: widget.userDataModel.email, // Optional: Defaults to 'NA'
+       // phone: "User Phone", // Optional: Defaults to 'NA'
         name: "User First Name", // Optional: Defaults to 'NA'
-        lastName: "User Last Name", // Optional: Defaults to 'NA'
+      //  lastName: "User Last Name", // Optional: Defaults to 'NA'
       ),
 
       // Optional Style Customizations

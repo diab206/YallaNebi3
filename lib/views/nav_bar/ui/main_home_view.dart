@@ -2,22 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/core/models/user_data_model.dart';
 import 'package:yalla_nebi3/views/favourit/ui/favourit_view.dart';
 import 'package:yalla_nebi3/views/home/ui/home_views.dart';
 import 'package:yalla_nebi3/views/nav_bar/logic/cubit/nav_bar_cubit.dart';
 import 'package:yalla_nebi3/views/profile/ui/profile_views.dart';
 import 'package:yalla_nebi3/views/store/ui/store_views.dart';
 
-class MainHomeView extends StatelessWidget {
+class MainHomeView extends StatefulWidget {
   static const String routeName = 'main_home';
-  MainHomeView({super.key});
-  final List<Widget> views = [
-    HomeViews(),
+  const MainHomeView({super.key,required this.userDataModel});
+  final UserDataModel userDataModel;
+
+  @override
+  State<MainHomeView> createState() => _MainHomeViewState();
+}
+
+class _MainHomeViewState extends State<MainHomeView> {
+  late List<Widget> views;
+  initState() {
+    views = [
+    HomeViews(userDataModel: widget.userDataModel,),
     StoreView(),
     FavouritView(),
     PerfoileView(),
   ];
-
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

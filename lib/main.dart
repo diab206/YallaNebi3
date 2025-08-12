@@ -44,7 +44,7 @@ class YallaNebi3 extends StatelessWidget {
     SupabaseClient client = Supabase.instance.client;
 
     return BlocProvider(
-      create: (context) => AuthenticationCubit(),
+      create: (context) => AuthenticationCubit()..getUserData(),
       child: MaterialApp(
         title: 'YallaNebi3',
         theme: ThemeData(
@@ -64,7 +64,9 @@ class YallaNebi3 extends StatelessWidget {
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),
           LoginView.routeName: (context) => LoginView(),
           SignUpView.routeName: (context) => const SignUpView(),
-          MainHomeView.routeName: (context) => MainHomeView(),
+          MainHomeView.routeName: (context) => MainHomeView(
+            userDataModel: context.read<AuthenticationCubit>().userDataModel!,
+          ),
         },
       ),
     );
