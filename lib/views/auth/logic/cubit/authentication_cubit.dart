@@ -1,99 +1,97 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// ignore: unused_import
-import 'package:yalla_nebi3/core/api_services.dart';
 import 'package:yalla_nebi3/core/models/user_data_model.dart';
 
 part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
-  AuthenticationCubit() : super(AuthenticationInitial());
+  AuthenticationCubit() : super(AuthenticationInitial()) {
+    // Listen to auth state changes (login, logout, refresh, restore session)
+    client.auth.onAuthStateChange.listen((event) {
+      final session = event.session;
+      // ignore: unnecessary_null_comparison
+      if (session != null && session.user != null) {
+        getUserData();
+      } else {
+        userDataModel = null;
+        if (!isClosed) emit(LogoutSuccess());
+      }
+    });
+
+    // immediate check when cubit is created
+    _checkSessionOnStart();
+  }
 
   final SupabaseClient client = Supabase.instance.client;
-  UserDataModel? userDataModel; 
+  UserDataModel? userDataModel;
 
+  Future<void> _checkSessionOnStart() async {
+    final session = client.auth.currentSession;
+    // ignore: unnecessary_null_comparison
+    if (session != null && session.user != null) {
+      await getUserData();
+    } else {
+      if (!isClosed) emit(LogoutSuccess());
+    }
+  }
 
   Future<void> login({required String email, required String password}) async {
     if (!isClosed) emit(LoginLoading());
     try {
-      final AuthResponse response = await client.auth.signInWithPassword(
+      final response = await client.auth.signInWithPassword(
         password: password,
         email: email,
       );
-
-      // Await getUserData so we only proceed after its completion
       await getUserData();
-      if (isClosed) return;
-
-      if (response.user != null) {
-        log('Login successful for user: ${response.user!.email}');
-        if (!isClosed) emit(LoginSuccess());
+      if (response.user != null && !isClosed) {
+        emit(LoginSuccess());
       } else {
         if (!isClosed) emit(LoginFailure(errorMessage: 'Login failed'));
       }
     } on AuthException catch (e) {
-      log('Auth Exception: ${e.toString()}');
       if (!isClosed) emit(LoginFailure(errorMessage: e.message));
     } catch (e) {
-      log('General Exception: ${e.toString()}');
       if (!isClosed) emit(LoginFailure(errorMessage: e.toString()));
     }
   }
 
   Future<void> register({
-  required String name,
-  required String email,
-  required String password,
-}) async {
-  if (!isClosed) emit(SignUpLoading());
-  try {
-    await client.auth.signUp(email: email, password: password);
-    if (isClosed) return;
-
-    await addUserData(email: email, name: name);
-    if (isClosed) return;
-    
-    // Refresh user data to get the newly created user
-    await getUserData();
-    if (isClosed) return;
-
-    if (!isClosed) emit(SignUpSuccess());
-  } on AuthException catch (e) {
-    log('Auth Exception during registration: ${e.toString()}');
-    if (!isClosed) emit(SignUpFailure(errorMessage: e.message));
-  } catch (e) {
-    log('General Exception during registration: ${e.toString()}');
-    if (!isClosed) emit(SignUpFailure(errorMessage: e.toString()));
-  }
-}
-
-  // Helper method to get current user
-  User? getCurrentUser() {
-    return client.auth.currentUser;
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    if (!isClosed) emit(SignUpLoading());
+    try {
+      await client.auth.signUp(email: email, password: password);
+      await addUserData(email: email, name: name);
+      await getUserData();
+      if (!isClosed) emit(SignUpSuccess());
+    } on AuthException catch (e) {
+      if (!isClosed) emit(SignUpFailure(errorMessage: e.message));
+    } catch (e) {
+      if (!isClosed) emit(SignUpFailure(errorMessage: e.toString()));
+    }
   }
 
-  // Helper method to sign out
-Future<void> signOut() async {
-  try {
-    await client.auth.signOut();
-    userDataModel = null; // Clear cached user data
-    if (!isClosed) emit(LogoutSuccess());
-  } catch (e) {
-    log(e.toString());
-    if (!isClosed) emit(LogoutFailure());
+  User? getCurrentUser() => client.auth.currentUser;
+
+  Future<void> signOut() async {
+    try {
+      await client.auth.signOut();
+      userDataModel = null;
+      if (!isClosed) emit(LogoutSuccess());
+    } catch (_) {
+      if (!isClosed) emit(LogoutFailure());
+    }
   }
-}
 
   Future<void> resetPassword(String email) async {
     if (!isClosed) emit(ResetpasswordLoading());
     try {
       await client.auth.resetPasswordForEmail(email);
       if (!isClosed) emit(ResetpasswordSuccess());
-    } catch (e) {
-      log(e.toString());
+    } catch (_) {
       if (!isClosed) emit(ResetpasswordFailure());
     }
   }
@@ -110,34 +108,26 @@ Future<void> signOut() async {
         'email': email,
       });
       if (!isClosed) emit(UserDataAddedSuccess());
-    } catch (e) {
-      log(e.toString());
+    } catch (_) {
       if (!isClosed) emit(UserDataAddedFailure());
     }
   }
 
-
   Future<void> getUserData() async {
     if (!isClosed) emit(GetUserDataLoading());
-
     try {
       final data = await client
           .from('users')
           .select()
           .eq("id", client.auth.currentUser!.id)
           .limit(1);
-
-      if (isClosed) return;
-
       if (data.isNotEmpty) {
         userDataModel = UserDataModel.fromJson(data.first);
         if (!isClosed) emit(GetUserDataSuccess());
       } else {
-        log('User not found in Supabase');
         if (!isClosed) emit(GetUserDataFailure());
       }
-    } catch (e) {
-      log('Error: $e');
+    } catch (_) {
       if (!isClosed) emit(GetUserDataFailure());
     }
   }
