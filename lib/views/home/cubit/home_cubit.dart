@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:yalla_nebi3/core/api_services.dart';
 import 'package:yalla_nebi3/models/product_model/favourit_product.dart';
 import 'package:yalla_nebi3/models/product_model/product_model.dart';
+import 'package:yalla_nebi3/models/product_model/purchase_table.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -23,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
     searchResults.clear();
     categoryProduct.clear();
     favouriteProducts.clear();
-
+    userOrders.clear();
     if (!isClosed) emit(GetDataLoading());
 
     try {
@@ -43,6 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
       // Filter products based on query and category
       search(query);
       getProductsByCatogries(category);
+      getUserOrdersProducts();
 
       if (!isClosed) emit(GetDataSucess());
     } catch (e) {
@@ -55,9 +57,7 @@ class HomeCubit extends Cubit<HomeState> {
     searchResults.clear();
     if (query != null && query.trim().isNotEmpty) {
       for (var product in products) {
-        if (product.productName!
-            .toLowerCase()
-            .contains(query.toLowerCase())) {
+        if (product.productName!.toLowerCase().contains(query.toLowerCase())) {
           searchResults.add(product);
         }
       }
@@ -137,6 +137,38 @@ class HomeCubit extends Cubit<HomeState> {
           if (favouritProduct.forUser == userId) {
             favouriteProductsList.add(product);
             favouriteProducts[product.productId!] = true;
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> buyProduct({required String productId}) async {
+    emit(BuyProductLoading());
+    try {
+      await _apiServices.postData("purchase_table", {
+        "is_bought": true,
+        "for_user": userId,
+        "for_product": productId,
+      });
+      emit(BuyProductSuccess());
+    } catch (e) {
+      log(e.toString());
+      emit(BuyProductFailure());
+    }
+  }
+  // Get user orders
+  List<ProductModel> userOrders = [];
+
+  void getUserOrdersProducts() {
+   
+
+    for (ProductModel product in products) {
+      if (product.purchaseTable != null &&
+          product.purchaseTable!.isNotEmpty) {
+        for (PurchaseTable purchase in product.purchaseTable!) {
+          if (purchase.forUser == userId) {
+            userOrders.add(product);  
           }
         }
       }
