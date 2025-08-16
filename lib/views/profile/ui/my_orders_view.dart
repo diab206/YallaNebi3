@@ -11,7 +11,9 @@ class MyOrdersView extends StatelessWidget {
       appBar: buildCustomAppBar(context, 'My Orders'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ProductList(shrinkWrap: true, physics: BouncingScrollPhysics()),
+        child: ProductList(
+          isMyOrdersViews: true,
+          shrinkWrap: true, physics: BouncingScrollPhysics()),
       ),
     );
   }
