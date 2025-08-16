@@ -17,15 +17,13 @@ void main() async {
 
   runApp(
     DevicePreview(
-      enabled: false, 
+      enabled: true,
       builder: (context) => const YallaNebi3(),
     ),
   );
-
 }
 
 Future<void> _initializeSupabase() async {
-  debugPrint('Initializing Supabase...');
   await Supabase.initialize(
     url: supabaseUrl,
     anonKey: anonKey,
@@ -33,7 +31,6 @@ Future<void> _initializeSupabase() async {
       authFlowType: AuthFlowType.pkce,
     ),
   );
-  debugPrint('Supabase initialized ✅');
 }
 
 class YallaNebi3 extends StatelessWidget {
@@ -41,10 +38,8 @@ class YallaNebi3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SupabaseClient client = Supabase.instance.client;
-
     return BlocProvider(
-      create: (context) => AuthenticationCubit()..getUserData(),
+      create: (context) => AuthenticationCubit(),
       child: MaterialApp(
         title: 'YallaNebi3',
         theme: ThemeData(
@@ -53,20 +48,16 @@ class YallaNebi3 extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         // ignore: deprecated_member_use
-        useInheritedMediaQuery: true, // ✅ Required for device_preview
+        useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
-        initialRoute: client.auth.currentSession != null
-            ? MainHomeView.routeName
-            : SplashScreen.routeName,
+        home: const SplashScreen(), // always start here
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),
           LoginView.routeName: (context) => LoginView(),
           SignUpView.routeName: (context) => const SignUpView(),
-          MainHomeView.routeName: (context) => MainHomeView(
-            userDataModel: context.read<AuthenticationCubit>().userDataModel!,
-          ),
+          MainHomeView.routeName: (context) => const MainHomeView(),
         },
       ),
     );

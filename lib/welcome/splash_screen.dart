@@ -32,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacementNamed(context, WelcomeScreen.routeName);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
