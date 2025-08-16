@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
 import 'package:yalla_nebi3/core/models/user_data_model.dart';
+import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
 import 'package:yalla_nebi3/views/favourit/ui/favourit_view.dart';
 import 'package:yalla_nebi3/views/home/ui/home_views.dart';
 import 'package:yalla_nebi3/views/nav_bar/logic/cubit/nav_bar_cubit.dart';
@@ -11,8 +12,9 @@ import 'package:yalla_nebi3/views/store/ui/store_views.dart';
 
 class MainHomeView extends StatefulWidget {
   static const String routeName = 'main_home';
-  const MainHomeView({super.key,required this.userDataModel});
-  final UserDataModel userDataModel;
+  final UserDataModel? userDataModel;
+
+  const MainHomeView({super.key, this.userDataModel});
 
   @override
   State<MainHomeView> createState() => _MainHomeViewState();
@@ -20,16 +22,21 @@ class MainHomeView extends StatefulWidget {
 
 class _MainHomeViewState extends State<MainHomeView> {
   late List<Widget> views;
+
   @override
-  initState() {
+  void initState() {
+    final userData = widget.userDataModel ??
+        context.read<AuthenticationCubit>().userDataModel;
+
     views = [
-    HomeViews(userDataModel: widget.userDataModel,),
-    StoreView(),
-    FavouritView(),
-    PerfoileView(),
-  ];
+      HomeViews(userDataModel: userData!),
+       StoreView(),
+      const FavouritView(),
+      const PerfoileView(),
+    ];
     super.initState();
   }
+
   
   @override
   Widget build(BuildContext context) {
@@ -74,7 +81,6 @@ class _MainHomeViewState extends State<MainHomeView> {
                   ), // navigation bar padding
                   tabs: [
                     GButton(icon: Icons.home, text: 'Home'),
-
                     GButton(icon: Icons.store, text: 'Store'),
                     GButton(icon: Icons.favorite, text: 'Favorite'),
                     GButton(icon: Icons.person, text: 'Profile'),
