@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+// ignore: unused_import
+import 'package:yalla_nebi3/core/api_services.dart';
 import 'package:yalla_nebi3/core/models/user_data_model.dart';
 
 part 'authentication_state.dart';

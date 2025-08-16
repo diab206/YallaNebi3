@@ -48,3 +48,7 @@ final class GetUserDataSuccess extends AuthenticationState {}
 final class GetUserDataLoading extends AuthenticationState {}
 
 final class GetUserDataFailure extends AuthenticationState {}
+
+
+
+
