@@ -1,48 +1,47 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yalla_nebi3/core/const/app_colors.dart';
+import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
+import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
 import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = 'splash';
-
   const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 4), () {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-        (Route<dynamic> route) => false, // Remove all routes
-      );
-    });
+    Timer(const Duration(seconds: 3), _checkAuth);
+  }
+
+  void _checkAuth() {
+    final cubit = context.read<AuthenticationCubit>();
+    final session = cubit.client.auth.currentSession;
+
+    // ignore: unnecessary_null_comparison
+    if (session != null && session.user != null) {
+      Navigator.pushReplacementNamed(context, MainHomeView.routeName);
+    } else {
+      Navigator.pushReplacementNamed(context, WelcomeScreen.routeName);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundcolor,
-
       body: Center(
-        child: SizedBox(
-          width: 300, // Set the width of the logo
-          height: 300, // Set the height of the logo
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/splash_logo.png'),
-                fit:
-                    BoxFit.contain, // Ensures the logo fits within the SizedBox
-              ),
-            ),
-          ),
+        child: Image.asset(
+          'assets/images/splash_logo.png',
+          width: 200,
+          height: 200,
         ),
       ),
     );
