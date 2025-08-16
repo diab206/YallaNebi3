@@ -15,9 +15,11 @@ class ProductCard extends StatelessWidget {
     required this.product,
     this.onTap,
     required this.isFavourit,
+    required this.onPaymentSuccess,
   });
   final ProductModel product;
   final Function()? onTap;
+  final Function()? onPaymentSuccess;
   final bool isFavourit;
 
   @override
@@ -127,14 +129,18 @@ class ProductCard extends StatelessWidget {
                               builder:
                                   (context) => PaymentView(
                                     onPaymentSuccess: () {
-                                      log('payment success');
+                                      // This is where the payment success is handled
+                                      log('Payment successful!');
+
+                                      // Call your actual success callback
+                                      if (onPaymentSuccess != null) {
+                                        onPaymentSuccess!();
+                                      }
                                     },
                                     onPaymentError: () {
                                       log('payment failure');
                                     },
-                                    price: double.parse(
-                                      product.price !,
-                                    ), // Required: Total price (e.g., 100 for 100 EGP)
+                                    price: double.parse(product.price!),
                                   ),
                             ),
                           );
