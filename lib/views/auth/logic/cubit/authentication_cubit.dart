@@ -131,4 +131,24 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       if (!isClosed) emit(GetUserDataFailure());
     }
   }
+  // Add these methods to your AuthenticationCubit class
+
+Future<void> updateUserName(String newName) async {
+  if (!isClosed) emit(UpdateUserDataLoading());
+  try {
+    // Update in Supabase
+    await client.from('users').update({
+      'name': newName,
+    }).eq('id', client.auth.currentUser!.id);
+    
+    // Update local model
+    if (userDataModel != null) {
+      userDataModel = userDataModel!.copyWith(name: newName);
+    }
+    
+    if (!isClosed) emit(UpdateUserDataSuccess());
+  } catch (e) {
+    if (!isClosed) emit(UpdateUserDataFailure());
+  }
+}
 }
