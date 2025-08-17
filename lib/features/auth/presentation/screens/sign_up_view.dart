@@ -10,7 +10,6 @@ import 'package:yalla_nebi3/features/auth/presentation/cubit/authentication_cubi
 import 'package:yalla_nebi3/features/auth/presentation/screens/login_view.dart';
 import 'package:yalla_nebi3/features/navbar/presentation/screens/main_home_view.dart';
 
-
 class SignUpView extends StatefulWidget {
   static const String routeName = 'signup';
 

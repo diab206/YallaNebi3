@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yalla_nebi3/core/utils/navigation_helper.dart';
@@ -7,31 +6,30 @@ import 'package:yalla_nebi3/core/widgets/custom_circle_indicator.dart';
 import 'package:yalla_nebi3/core/widgets/custom_text_button.dart';
 import 'package:yalla_nebi3/core/widgets/custom_text_form_field.dart';
 import 'package:yalla_nebi3/features/auth/presentation/cubit/authentication_cubit.dart';
-import 'package:yalla_nebi3/features/auth/presentation/screens/login_view.dart';
+import 'package:yalla_nebi3/features/auth/presentation/screens/forgot_view.dart';
 import 'package:yalla_nebi3/features/navbar/presentation/screens/main_home_view.dart';
+import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
 
+class LoginView extends StatefulWidget {
+  static const String routeName = 'login';
 
-class SignUpView extends StatefulWidget {
-  static const String routeName = 'signup';
-
-  const SignUpView({super.key});
+  const LoginView({super.key});
 
   @override
-  State<SignUpView> createState() => SignUpViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class SignUpViewState extends State<SignUpView> {
+class _LoginViewState extends State<LoginView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is SignUpSuccess) {
+        if (state is LoginSuccess) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -41,7 +39,8 @@ class SignUpViewState extends State<SignUpView> {
             ),
           );
         }
-        if (state is SignUpFailure) {
+
+        if (state is LoginFailure) {
           showAppSnackBar(context, state.errorMessage);
         }
       },
@@ -55,36 +54,14 @@ class SignUpViewState extends State<SignUpView> {
             ),
             centerTitle: true,
           ),
-          body: state is SignUpLoading
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CustomCircleProgressIndicictor(),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Creating your account...',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    if (kDebugMode)
-                      TextButton(
-                        onPressed: () {
-                          debugPrint('Current state: ${state.runtimeType}');
-                          debugPrint('Current user: ${cubit.getCurrentUser()}');
-                        },
-                        child: const Text('Debug Current State'),
-                      ),
-                  ],
-                )
+          body: state is LoginLoading
+              ? const Center(child: CustomCircleProgressIndicictor())
               : SafeArea(
                   child: Center(
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(24),
                       child: Form(
-                        key: formKey,
+                        key: _formKey,
                         child: Card(
                           elevation: 8,
                           shape: RoundedRectangleBorder(
@@ -96,31 +73,13 @@ class SignUpViewState extends State<SignUpView> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Text(
-                                  'Sign Up',
+                                  'Login',
                                   style: TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 32),
-
-                                // Name Field
-                                CustomTextFormField(
-                                  controller: nameController,
-                                  hintText: 'Full Name',
-                                  keyboardType: TextInputType.name,
-                                  prefixIcon: const Icon(Icons.person_outline),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Name is required';
-                                    }
-                                    if (value.length < 2) {
-                                      return 'Name must be at least 2 characters';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 20),
 
                                 // Email Field
                                 CustomTextFormField(
@@ -168,34 +127,32 @@ class SignUpViewState extends State<SignUpView> {
                                     return null;
                                   },
                                 ),
+                                const SizedBox(height: 16),
+
+                                // Forgot Password
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: CustomTextButton(
+                                    text: 'Forgot Password?',
+                                    onTap: () => navigteTo(context, ForgotView()),
+                                  ),
+                                ),
 
                                 const SizedBox(height: 32),
 
-                                // Sign Up Button - Full Width
+                                // Login Button - Full Width
                                 SizedBox(
                                   width: double.infinity,
                                   height: 52,
                                   child: ElevatedButton(
-                                    onPressed: state is SignUpLoading
+                                    onPressed: state is LoginLoading
                                         ? null
                                         : () {
-                                            if (formKey.currentState!.validate()) {
-                                              if (kDebugMode) {
-                                                debugPrint('Form validated, calling register...');
-                                                debugPrint('Email: ${emailController.text}');
-                                                debugPrint('Password length: ${passwordController.text.length}');
-                                                debugPrint('Name: ${nameController.text}');
-                                              }
-
-                                              cubit.register(
+                                            if (_formKey.currentState!.validate()) {
+                                              cubit.login(
                                                 email: emailController.text.trim(),
                                                 password: passwordController.text,
-                                                name: nameController.text.trim(),
                                               );
-                                            } else {
-                                              if (kDebugMode) {
-                                                debugPrint('Form validation failed');
-                                              }
                                             }
                                           },
                                     style: ElevatedButton.styleFrom(
@@ -206,7 +163,7 @@ class SignUpViewState extends State<SignUpView> {
                                       ),
                                       elevation: 2,
                                     ),
-                                    child: state is SignUpLoading
+                                    child: state is LoginLoading
                                         ? const SizedBox(
                                             height: 20,
                                             width: 20,
@@ -216,7 +173,7 @@ class SignUpViewState extends State<SignUpView> {
                                             ),
                                           )
                                         : const Text(
-                                            'Sign Up',
+                                            'Login',
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600,
@@ -227,20 +184,20 @@ class SignUpViewState extends State<SignUpView> {
 
                                 const SizedBox(height: 32),
 
-                                // Login Link
+                                // Sign Up Link
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Text(
-                                      'Already have an account? ',
+                                      'Don\'t have an account? ',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,
                                       ),
                                     ),
                                     CustomTextButton(
-                                      text: 'Login',
-                                      onTap: () => navigteTo(context, LoginView()),
+                                      text: 'Sign Up',
+                                      onTap: () => navigteTo(context, SignUpView()),
                                     ),
                                   ],
                                 ),
@@ -259,7 +216,6 @@ class SignUpViewState extends State<SignUpView> {
 
   @override
   void dispose() {
-    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:device_preview/device_preview.dart';
-
-import 'package:yalla_nebi3/core/sensetive_data.dart';
-import 'package:yalla_nebi3/views/auth/logic/cubit/authentication_cubit.dart';
-import 'package:yalla_nebi3/views/auth/ui/login_view.dart';
+import 'package:yalla_nebi3/core/config/sensitive_data.dart';
+import 'package:yalla_nebi3/features/auth/presentation/cubit/authentication_cubit.dart';
+import 'package:yalla_nebi3/features/auth/presentation/screens/login_view.dart';
+import 'package:yalla_nebi3/features/navbar/presentation/screens/main_home_view.dart';
+import 'package:yalla_nebi3/features/welcome/presentation/screens/splash_screen.dart';
 import 'package:yalla_nebi3/views/auth/ui/sign_up_view.dart';
-import 'package:yalla_nebi3/views/nav_bar/ui/main_home_view.dart';
-import 'package:yalla_nebi3/welcome/splash_screen.dart';
 import 'package:yalla_nebi3/welcome/welcome_screen.dart';
 
 void main() async {
